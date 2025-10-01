@@ -27,7 +27,7 @@ export default function App() {
  return (
    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
      <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 100, marginBottom: 50 }}>
-       Firebase conectado!!!
+       Firebase conectado!!! 📖📖📖
      </Text>
      <FlatList
        data={mensagens}

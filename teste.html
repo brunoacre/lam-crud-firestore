@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 19 - Manipulando o DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+        }
+        .item-lista {
+            background-color: #e9ecef;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        .destaque {
+            background-color: #ffc107;
+            color: #000;
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #novo-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #28a745;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="titulo-principal">Laboratório Web I - Aula 19</h1>
+        
+        <div id="conteudo">
+            <p>Este é um parágrafo simples dentro da div 'conteudo'. Vamos usá-lo para nossos exemplos práticos.</p>
+            <ul id="lista-de-itens">
+                <li class="item-lista">Item 1</li>
+                <li class="item-lista">Item 2</li>
+                <li class="item-lista" id="item-especial">Item 3 (Especial)</li>
+            </ul>
+        </div>
+
+        <h2>Ações com JavaScript</h2>
+        <button onclick="mudarTexto()">Mudar Título e Parágrafo</button>
+        <button onclick="mudarEstilo()">Destacar Item Especial</button>
+        <button onclick="adicionarItem()">Adicionar Novo Item</button>
+        <button onclick="criarElemento()">Criar Nova Div</button>
+
+        <div id="novo-container">
+            </div>
+
+    </div>
+
+    <script>
+        // Início da explicação do Passo a Passo do Roteiro
+        
+        // Passo 1: Apresentando o 'document'
+        console.log("O objeto 'document' representa toda a nossa página HTML:");
+        console.log(document);
+
+        // ---
+
+        // Passo 2: Selecionando Elementos
+        // Função para ser chamada quando a aula chegar nesta parte
+        function selecionarElementos() {
+            // A. Pelo ID (retorna um único elemento)
+            const titulo = document.getElementById('titulo-principal');
+            console.log("Elemento selecionado pelo ID 'titulo-principal':", titulo);
+
+            // B. Pela Classe (retorna uma coleção de elementos)
+            const itensDaLista = document.getElementsByClassName('item-lista');
+            console.log("Coleção de elementos pela classe 'item-lista':", itensDaLista);
+            console.log("Primeiro item da coleção:", itensDaLista[0]);
+
+            // C. Pela Tag (retorna uma coleção)
+            const todosOsLis = document.getElementsByTagName('li');
+            console.log("Coleção de elementos pela tag 'li':", todosOsLis);
+
+            // D. Query Selector (o mais versátil)
+            const paragrafo = document.querySelector('#conteudo p'); // Usa seletor de CSS
+            console.log("Elemento selecionado com querySelector:", paragrafo);
+            
+            const primeiroItem = document.querySelector('.item-lista'); // Pega o primeiro que encontrar
+            console.log("Primeiro item com a classe 'item-lista' via querySelector:", primeiroItem);
+
+            const todosOsItens = document.querySelectorAll('.item-lista'); // Pega todos
+            console.log("NodeList com todos os itens via querySelectorAll:", todosOsItens);
+        }
+        
+        // Sugestão: Chame esta função no console do navegador para demonstrar
+        // selecionarElementos();
+
+        // ---
+
+        // Passo 3: Manipulando Conteúdo e Atributos
+        function mudarTexto() {
+            // Seleciona o título
+            const titulo = document.getElementById('titulo-principal');
+            
+            // Altera o texto interno usando innerHTML (permite tags HTML)
+            titulo.innerHTML = "DOM Manipulado com <em>Sucesso</em>! ✅";
+
+            // Seleciona o parágrafo
+            const paragrafo = document.querySelector('#conteudo p');
+            
+            // Altera o texto interno usando innerText (ignora tags HTML)
+            paragrafo.innerText = "O conteúdo deste parágrafo foi alterado dinamicamente via JavaScript. Legal, né?";
+
+            console.log("Textos alterados!");
+        }
+
+        // ---
+
+        // Passo 4: Manipulando Estilos
+        function mudarEstilo() {
+            const itemEspecial = document.getElementById('item-especial');
+
+            // Alterando o estilo diretamente (inline)
+            itemEspecial.style.backgroundColor = '#28a745'; // Verde
+            itemEspecial.style.color = 'white';
+            itemEspecial.style.border = '2px solid #218838';
+            itemEspecial.style.fontWeight = 'bold';
+            
+            // Adicionando uma classe CSS já definida no <style>
+            const primeiroItem = document.querySelector('.item-lista');
+            primeiroItem.classList.add('destaque');
+
+            console.log("Estilos e classes alterados!");
+        }
+
+        // ---
+
+        // Passo 5: Criando e Adicionando Novos Elementos
+        function adicionarItem() {
+            // 1. Contar quantos itens já existem para criar o texto do novo item
+            const lista = document.getElementById('lista-de-itens');
+            const numeroDeItens = lista.getElementsByTagName('li').length;
+            
+            // 2. Criar um novo elemento <li>
+            const novoItem = document.createElement('li');
+            
+            // 3. Definir o conteúdo e a classe do novo item
+            novoItem.innerText = `Item ${numeroDeItens + 1} (Adicionado via JS)`;
+            novoItem.classList.add('item-lista');
+            
+            // 4. Adicionar (anexar) o novo item ao final da lista <ul>
+            lista.appendChild(novoItem);
+
+            console.log("Novo item adicionado à lista:", novoItem);
+        }
+
+        function criarElemento() {
+            const container = document.getElementById('novo-container');
+
+            // Limpa o container antes de adicionar um novo elemento para não duplicar
+            container.innerHTML = '';
+            
+            // 1. Criar um novo elemento <h2>
+            const novoSubtitulo = document.createElement('h2');
+            novoSubtitulo.innerText = "Div Criada Dinamicamente";
+            
+            // 2. Criar um novo elemento <p>
+            const novoParagrafo = document.createElement('p');
+            novoParagrafo.innerText = "Este subtítulo e este parágrafo foram criados e inseridos no DOM em tempo real usando 'createElement' e 'appendChild'.";
+            
+            // 3. Adicionar os novos elementos ao container
+            container.appendChild(novoSubtitulo);
+            container.appendChild(novoParagrafo);
+
+            console.log("Nova div com conteúdo foi criada e inserida.");
+        }
+
+    </script>
+</body>
+</html>

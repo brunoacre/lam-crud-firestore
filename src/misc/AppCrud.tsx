@@ -45,7 +45,7 @@ export default function App() {
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10, marginTop: 30 }}>
-        App de Tarefas 📝
+        App de Tarefas 📝  📘 
       </Text>
 
       <TextInput
